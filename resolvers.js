@@ -1,20 +1,55 @@
 export default {
+  Activity: {
+    creator: ({
+        creatorId
+      }, args, {
+        models
+      }) =>
+      models.User.findOne({
+        where: {
+          id: creatorId,
+        },
+      }),
+  },
   User: {
-    boards: ({ id }, args, { models }) =>
+    boards: ({
+        id
+      }, args, {
+        models
+      }) =>
       models.Board.findAll({
         where: {
           owner: id,
         },
       }),
-    suggestions: ({ id }, args, { models }) =>
+    suggestions: ({
+        id
+      }, args, {
+        models
+      }) =>
       models.Suggestion.findAll({
+        where: {
+          creatorId: id,
+        },
+      }),
+
+    activities: ({
+        id
+      }, args, {
+        models
+      }) =>
+      models.Activity.findAll({
         where: {
           creatorId: id,
         },
       }),
   },
   Board: {
-    suggestions: ({ id }, args, { models }) =>
+    suggestions: ({
+        id
+      }, args, {
+        models
+      }) =>
       models.Suggestion.findAll({
         where: {
           boardId: id,
@@ -22,7 +57,11 @@ export default {
       }),
   },
   Suggestion: {
-    creator: ({ creatorId }, args, { models }) =>
+    creator: ({
+        creatorId
+      }, args, {
+        models
+      }) =>
       models.User.findOne({
         where: {
           id: creatorId,
@@ -30,20 +69,37 @@ export default {
       }),
   },
   Query: {
-    allUsers: (parent, args, { models }) => models.User.findAll(),
-    getUser: (parent, { username }, { models }) =>
+    allActivity: (parent, args, {
+      models
+    }) => models.Activity.findAll(),
+    allUsers: (parent, args, {
+      models
+    }) => models.User.findAll(),
+    getUser: (parent, {
+        username
+      }, {
+        models
+      }) =>
       models.User.findOne({
         where: {
           username,
         },
       }),
-    userBoards: (parent, { owner }, { models }) =>
+    userBoards: (parent, {
+        owner
+      }, {
+        models
+      }) =>
       models.Board.findAll({
         where: {
           owner,
         },
       }),
-    userSuggestions: (parent, { creatorId }, { models }) =>
+    userSuggestions: (parent, {
+        creatorId
+      }, {
+        models
+      }) =>
       models.Suggestion.findAll({
         where: {
           creatorId,
@@ -52,13 +108,37 @@ export default {
   },
 
   Mutation: {
-    createUser: (parent, args, { models }) => models.User.create(args),
-    updateUser: (parent, { username, newUsername }, { models }) =>
-      models.User.update({ username: newUsername }, { where: { username } }),
-    deleteUser: (parent, args, { models }) =>
-      models.User.destroy({ where: args }),
-    createBoard: (parent, args, { models }) => models.Board.create(args),
-    createSuggestion: (parent, args, { models }) =>
+    createUser: (parent, args, {
+      models
+    }) => models.User.create(args),
+    updateUser: (parent, {
+        username,
+        newUsername
+      }, {
+        models
+      }) =>
+      models.User.update({
+        username: newUsername
+      }, {
+        where: {
+          username
+        }
+      }),
+    deleteUser: (parent, args, {
+        models
+      }) =>
+      models.User.destroy({
+        where: args
+      }),
+    createBoard: (parent, args, {
+      models
+    }) => models.Board.create(args),
+    createAct: (parent, args, {
+      models
+    }) => models.Activity.create(args),
+    createSuggestion: (parent, args, {
+        models
+      }) =>
       models.Suggestion.create(args),
   },
 };

@@ -1,10 +1,18 @@
 export default `
 
-  type Suggestion {
-    id: Int!
-    text: String!
-    creator: User!
-  }
+type Activity {
+  id: Int!
+  title: String!
+  creator: User!
+  creatorId: Int!
+}
+
+type Suggestion {
+  id: Int!
+  text: String!
+  creator: User!
+  activityId: Int!
+}
 
   type Board {
     id: Int!
@@ -20,9 +28,11 @@ export default `
     updatedAt: String! 
     boards: [Board!]!
     suggestions: [Suggestion!]!
+    activities:[Activity!]!
   }
 
   type Query {
+    allActivity: [Activity!]!
     allUsers: [User!]!
     getUser(username: String!): User
     userBoards(owner: String!): [Board!]!
@@ -34,6 +44,7 @@ export default `
     updateUser(username: String!, newUsername: String!): [Int!]!
     deleteUser(username: String!): Int!
     createBoard(owner: Int!, name: String): Board!
+    createAct(creatorId: Int!, title: String): Activity!
     createSuggestion(creatorId: Int!, text: String, boardId: Int!): Suggestion!
   }
 `;

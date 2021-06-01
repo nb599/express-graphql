@@ -12,6 +12,11 @@ export default (sequelize, DataTypes) => {
     User.hasMany(models.Suggestion, {
       foreignKey: 'creatorId',
     });
+
+    // 1 to many with suggestion
+    User.hasMany(models.Activity, {
+      foreignKey: 'creatorId',
+    });
   };
 
   return User;

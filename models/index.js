@@ -1,12 +1,13 @@
 import Sequelize from 'sequelize';
 
+
 const sequelize = new Sequelize(
-  'test_graphql_db',
-  'test_graphql_admin',
-  'iamapassword',
-  {
-    host: 'localhost',
-    dialect: 'postgres',
+  'apartment',
+  'apartment',
+  'eLKdHcK3P2aR8y78', {
+    host: '39.106.122.197',
+    port: '3306',
+    dialect: 'mysql',
   },
 );
 
@@ -14,6 +15,7 @@ const db = {
   User: sequelize.import('./user'),
   Board: sequelize.import('./board'),
   Suggestion: sequelize.import('./suggestion'),
+  Activity: sequelize.import('./activity'),
 };
 
 Object.keys(db).forEach((modelName) => {
